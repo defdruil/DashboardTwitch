@@ -1,0 +1,31 @@
+@import "~bootstrap-material-design/scss/bootstrap-material-design";
+.graphCard{
+    height: 400px; 
+    width: 400px;
+}
+
+#sideBar{
+    z-index: 1000;
+    transform: translateX(-100%);
+    &.active{
+        transform: translateX(0);
+    }
+    transition: transform 0.5s;
+}
+
+.overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    transition: opacity 1s;
+    opacity: 0;
+    background-color: #101010;
+    z-index: 990;
+    &.active{
+        display: block;
+        opacity: 0.8;
+    }
+}

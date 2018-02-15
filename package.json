@@ -6,6 +6,15 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "meteor-node-stubs": "^0.3.2"
+    "bootstrap": "^4.0.0",
+    "bootstrap-material-design": "^4.1.1",
+    "chart.js": "^2.7.1",
+    "orchestrator": "^0.3.8"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-watch": "^5.0.0",
+    "node-sass-tilde-importer": "^1.0.1"
   }
 }

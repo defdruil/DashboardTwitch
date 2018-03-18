@@ -1,7 +1,7 @@
 @import "~bootstrap-material-design/scss/bootstrap-material-design";
 .graphCard{
-    height: 400px; 
-    width: 400px;
+    min-height: 400px; 
+    min-width: 400px;
 }
 
 #sideBar{
@@ -28,4 +28,17 @@
         display: block;
         opacity: 0.8;
     }
+}
+
+.sidebarColorText{
+    color: white;
+}
+
+.sidebarColorText:hover{
+    cursor: pointer;
+}
+.kpiChart {
+    font-weight: bold;
+    color: black;
+    
 }

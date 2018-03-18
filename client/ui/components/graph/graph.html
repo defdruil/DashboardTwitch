@@ -1,8 +1,17 @@
 <template name="graph">
         <div class="card graphCard col-md-4">
                 <div class="card-body">
-                    <h5 class="card-title">graph 1</h5>
-                    <canvas id="myChart" width="400" height="400"></canvas>
+                        <h5 class="card-title">{{title}}</h5>
+                        {{#if isGauge}}
+                                {{>Template.dynamic template='gauge'}} 
+                        {{else}} 
+                                {{#if isChart}} 
+                                        {{>Template.dynamic template='chart'}}
+                                {{else}} 
+                                        {{>Template.dynamic template='kpi'}} 
+                                {{/if}} 
+                        {{/if}}
                 </div>
+                <div class="btn btn-primary button"></div>
         </div>
 </template>

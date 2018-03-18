@@ -1,6 +1,11 @@
-<template name="Home">
+<template name="home">
     <div class="row">
-        {{> graph}}
+            {{#each allGraphs}}
+                {{> Template.dynamic template='graph' data=this}}
+            {{/each}} 
+        <!--{{#each tasks}}
+            {{>task}}
+        {{/each}}-->
         <!--<div class="card graphCard col-md-4">
                 <div class="card-body">
                     <h5 class="card-title">graph2</h5>

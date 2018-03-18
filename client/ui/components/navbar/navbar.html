@@ -1,7 +1,12 @@
 <template name = "navbar">
     <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="d-flex col-2 flex-column h-100 bg-primary fixed-top" id="sideBar"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="d-flex col-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
+            <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Ajouter un graphique</button>
+            {{#each graphs}}
+              <p>{{title}} <i class="graphName fas fa-trash-alt" data-id={{_id}}></i></p>
+            {{/each}}
+        </div>
         <div class="overlay"></div>
         <!-- Navbar brand -->
         <a class="navbar-brand" href="#sideBar" data-toggle="collapse"><i class="fas fa-bars menu_icon"></i></a>
@@ -12,13 +17,50 @@
     
         <!-- Collapsible content -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    
-            <!-- Search form -->
-            <form class="form-inline ml-auto">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            </form>
-        </div>
-        <!-- Collapsible content -->
-    
+        </div>    
     </nav>
+    <!-- Modal AddGraphics -->
+    <div class="modal fade addGraphique" id="addGraphique" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau graphique</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form>
+              <div class="form-group">
+                  <label for="name">Nom :</label>
+                  <input class="form-control" placeholder="nom du graphique" name="name" id="name">
+              </div>
+              <div class="form-group">
+                  <label for="type">Type :</label>
+                  <select class="form-control" id="type">
+                      <option>Jauge</option>
+                      <option>Donuts</option>
+                      <option>KPI</option>
+                      <option>Lineaire</option>
+                      <option>Histogramme</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="data">Donnees :</label>
+                  <select class="form-control" id="data">
+                    <option>truc</option>
+                    <option>truc</option>
+                    <option>truc</option>
+                    <option>truc</option>
+                  </select>
+              </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              <button type="button" class="btn btn-primary submitGraph">Creer le graphique</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </template>

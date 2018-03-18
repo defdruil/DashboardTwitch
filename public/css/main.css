@@ -11173,8 +11173,8 @@ h6 {
     min-width: 280px; } }
 
 .graphCard {
-  height: 400px;
-  width: 400px; }
+  min-height: 400px;
+  min-width: 400px; }
 
 #sideBar {
   z-index: 1000;
@@ -11197,3 +11197,13 @@ h6 {
   .overlay.active {
     display: block;
     opacity: 0.8; }
+
+.sidebarColorText {
+  color: white; }
+
+.sidebarColorText:hover {
+  cursor: pointer; }
+
+.kpiChart {
+  font-weight: bold;
+  color: black; }

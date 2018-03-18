@@ -1,6 +1,11 @@
 import './graph.html';
-Template.graph.onRendered(function(){
-    var ctx = document.getElementById("myChart");
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Template } from 'meteor/templating';
+
+Template.graph.onCreated(function () {
+    console.log(Template.instance().data);
+
+    /*var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -36,5 +41,31 @@ Template.graph.onRendered(function(){
               }]
           }
       }
-    });
+    });*/
+});
+
+Template.graph.helpers({
+    value: function () {
+        if (Template.instance().value == null) {
+            Template.instance().value = new ReactiveVar(1000000000);
+        }
+        return Template.instance().value.get();
+    },
+    graph: function () {
+        if (Template.instance().data.type === 'gauge') {
+            return Template.instance().graphGauge;
+        } else {
+            //chartjs
+        }
+    },
+    isGauge: function () {
+        return Template.instance().data.type === 'gauge';
+    },
+    isChart: function () {
+        const chartTypes = ['bar', 'line', 'doughnut'];
+        return chartTypes.indexOf(Template.instance().data.type) != -1;
+    },
+    isKpi: function () {
+        return Template.instance().data.type === 'KPI';
+    }
 });

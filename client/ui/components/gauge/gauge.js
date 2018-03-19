@@ -8,6 +8,17 @@ Template.gauge.onCreated(function() {
 Template.gauge.onRendered(function () {
     console.log("Rendu d'un graphe de type", this.data.type);
     console.log("Attribut data:", Template.instance().data);
+	Meteor.call("getCurrentValues", function(error, result){
+		if(!error){
+			console.log(result);
+		} else {
+			console.log(error);
+		}
+	});
+	//console.log(Meteor.call("start"));
+	//console.log(Meteor.call("stop"));
+	//console.log(Meteor.call("reset"));
+	
     // init jauge
     const DOMGraph = Template.instance().find(".circularGaugeContainer");
     Template.instance().graphGauge = $(DOMGraph).dxCircularGauge({

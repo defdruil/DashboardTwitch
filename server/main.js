@@ -15,7 +15,6 @@ Meteor.methods({
           endValue: 4000000000,
           tickInterval: 500000000
         }
-        name =  'number of zombies'
       }else if(type === 'KPI'){
         var settings = {
           value: 0
@@ -84,7 +83,7 @@ Meteor.methods({
           labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
           datasets: [
             {
-              label: "Population (millions)",
+              label: "",
               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
               data: [2478,5267,734,784,433]
             }

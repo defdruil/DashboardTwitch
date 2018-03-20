@@ -1,10 +1,10 @@
 <template name = "navbar">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="d-flex col-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
-            <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Ajouter un graphique</button>
+        <div class="d-flex col-md-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
+            <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Créer un Graph</button>
             {{#each graphs}}
-              <p>{{title}} <i class="graphName fas fa-trash-alt" data-id={{_id}}></i></p>
+              <a>{{title}} <i class="graphName fas fa-trash-alt clickable" data-id={{_id}}></i></a>
             {{/each}}
         </div>
         <div class="overlay"></div>

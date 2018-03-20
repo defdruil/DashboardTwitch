@@ -19,7 +19,16 @@ Template.navbar.events({
         var graphName = $("#name").val();
         var graphType = $("#type").val();
         var graphData = $("#data").val();
-        Meteor.call("addGraphics", graphName, graphType, graphData);
+		var i =0;
+		var data;
+		var datas = Array();
+		while ($("#data_"+i).val() != undefined){
+			data = $("#data_"+i).val();
+			if (data != "none"){
+				datas.push(data);
+			}
+		}
+        Meteor.call("addGraphics", graphName, graphType, datas);
         $('#addGraphique').modal('hide');
         $('#sideBar').toggleClass("active");
         $('.overlay').toggleClass("active");

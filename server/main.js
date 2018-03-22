@@ -3,6 +3,8 @@
 import '/imports/startup/server';
 import '/imports/startup/both';
 
+var id=0;
+
 Meteor.methods({
     deleteGraphics: function(removeId){
       return GraphicsList.remove(removeId);
@@ -11,17 +13,20 @@ Meteor.methods({
       if(type == 'Jauge'){
         type = 'gauge';
         var settings = {
+          id,
           startValue: 0,
-          endValue: 4000000000,
-          tickInterval: 500000000
+          endValue: 1000000000,
+          tickInterval: 50000000
         }
       }else if(type === 'KPI'){
         var settings = {
+          id,
           value: 0
         };
       }else if(type === 'Histogramme'){
         type = 'bar';
         var settings = {
+          id,
           labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
           datasets: [{
             label: '# of Votes',
@@ -48,6 +53,7 @@ Meteor.methods({
       } else if (type === 'Lineaire') {
         type = 'line';
         var settings = {
+          id,
           labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
           datasets: [{ 
               data: [86,114,106,106,107,111,133,221,783,2478],
@@ -80,6 +86,7 @@ Meteor.methods({
       }else if (type === 'Donuts'){
         type = 'doughnut';
         settings = {
+          id,
           labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
           datasets: [
             {
@@ -90,6 +97,7 @@ Meteor.methods({
           ]
         }
       }
+      id++;
       return GraphicsList.insert({type: type, data: datas, settings: settings, title: name});
     }
   });

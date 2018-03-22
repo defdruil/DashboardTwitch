@@ -135,7 +135,7 @@ Template.navbar.events({
             var selectIds = tmpl.selectIds.get();
             var datas = [];
             for (var i = 0 ; i < selectIds.length ; i ++){
-                datas.push($(selectIds[i].id).val());
+                datas.push($("#" + selectIds[i].id).val());
             }
             Meteor.call("addGraphics", graphName, graphType, datas);
             tmpl.notEnoughSelects.set(false);

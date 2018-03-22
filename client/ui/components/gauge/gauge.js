@@ -1,25 +1,32 @@
 import './gauge.html'
 import { Template } from 'meteor/templating';
 
-var self;
+var self= [];
 
 function getValues(){
-    Meteor.call("getServerVariableValue", self.data[0], function(error, result){
+    Meteor.call("getServerVariableValue", self.data.data[0], function(error, result){
         if(!error){
-            self.value.set(result.value);
-            self.graphGauge.dxCircularGauge({ value: self.value.get() });
+           setNewValue(result.value);
+            //self.value.set(result.value);
+            //self.graphGauge.dxCircularGauge({ value: self.value.get() });
         }
     });
 }
 
+function setNewValue(newValue){
+    self.value.set(newValue);
+    self.graphGauge.dxCircularGauge({ value: newValue });
+}
+
 Template.gauge.onCreated(function() {
     //Template.instance().value = new ReactiveVar(1000000000);
-    self = this;
+    self.push(this);
+    this.id = this.data.settings.id;
     if (this.interval){
         clearInterval(this.interval);
     }
     this.value = new ReactiveVar(0);
-    if(this.data.length == 1){
+    if(this.data.data.length == 1){
         setInterval(getValues, 100);
     }
     
@@ -42,7 +49,7 @@ Template.gauge.onRendered(function () {
 	//console.log(this);
 	
     // init jauge
-    const DOMGraph = Template.instance().find(".circularGaugeContainer");
+    const DOMGraph = Template.instance().find("#circularGaugeContainer_" + this.id);
     Template.instance().graphGauge = $(DOMGraph).dxCircularGauge({
         rangeContainer: {
             offset: 10,
@@ -52,8 +59,8 @@ Template.gauge.onRendered(function () {
             ]
         },
         scale: {
-            startValue: Template.instance().settings.startValue, endValue: Template.instance().settings.endValue,
-            majorTick: { tickInterval: Template.instance().settings.tickInterval },
+            startValue: Template.instance().data.settings.startValue, endValue: Template.instance().data.settings.endValue,
+            majorTick: { tickInterval: Template.instance().data.settings.tickInterval },
             label: {
                 format: 'number'
             }
@@ -90,8 +97,15 @@ Template.gauge.events({
         if (!Template.instance().value) {
             Template.instance().value = new ReactiveVar(1000000000);
         }
-
-        Template.instance().value.set(Template.instance().value.get() + 1000000000);
-        Template.instance().graphGauge.dxCircularGauge({ value: Template.instance().value.get() });
+        var newValue = Template.instance().value.get() + 1000000000;
+        setNewValue(newValue);
+        //Template.instance().value.set(Template.instance().value.get() + 1000000000);
+        //Template.instance().graphGauge.dxCircularGauge({ value: Template.instance().value.get() });
     }
 })
+
+Template.gauge.helpers({
+    id: function(){
+        return Template.instance().id;
+    }
+});

@@ -8,42 +8,42 @@ var self;
 function getNewValues(){
     Meteor.call("getServerVariableValue", "day", function(error, result){
         if (!error){
-         self.day.set(result);
+         self.day.set(result.value);
         } else {
             console.log(error);
         }
     });
     Meteor.call("getServerVariableValue", "month", function(error, result){
         if (!error){
-         self.month.set(result);
+         self.month.set(result.value);
         } else {
             console.log(error);
         }
     });
     Meteor.call("getServerVariableValue", "year", function(error, result){
         if (!error){
-         self.year.set(result);
+         self.year.set(result.value);
         } else {
             console.log(error);
         }
     });
     Meteor.call("getServerVariableValue", "weekNumber", function(error, result){
         if (!error){
-         self.weekNumber.set(result);
+         self.weekNumber.set(result.value);
         } else {
             console.log(error);
         }
     });
     Meteor.call("getServerVariableValue", "totalLiving", function(error, result){
         if (!error){
-         self.totalLiving.set(result);
+         self.totalLiving.set(result.value);
         } else {
             console.log(error);
         }
     });
     Meteor.call("getServerVariableValue", "totalZombies", function(error, result){
         if (!error){
-         self.totalZombies.set(result);
+         self.totalZombies.set(result.value);
         } else {
             console.log(error);
         }
@@ -53,14 +53,14 @@ function getNewValues(){
 function resetValues(){
     Meteor.call("getServerVariableValue", "totalPopulation", function(error, result){
         if (!error){
-         self.totalPopulation.set(result);
-         $("#population").val(result);
+         self.totalPopulation.set(result.value);
+         $("#population").val(result.value);
         }
     });
  }
 
 Template.header.onCreated(function(){
-    self = this;
+    self = Template.instance();
     if (this.interval){
         clearInterval(this.interval);
       }

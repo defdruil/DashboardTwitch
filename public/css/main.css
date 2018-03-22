@@ -11207,3 +11207,10 @@ h6 {
 .kpiChart {
   font-weight: bold;
   color: black; }
+
+.clickable {
+  cursor: pointer; }
+
+.form-error {
+  color: red;
+  font-size: 90%; }

@@ -1,66 +1,96 @@
-<template name = "navbar">
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="d-flex col-md-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
-            <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Créer un Graph</button>
-            {{#each graphs}}
-              <a>{{title}} <i class="graphName fas fa-trash-alt clickable" data-id={{_id}}></i></a>
-            {{/each}}
+<template name="navbar">
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="d-flex col-md-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
+      <br/>
+      <div class="form-inline">
+        <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Créer un Graph</button>
+      </div>
+      <br/>
+      <h5>Mes Graphs</h5>
+      {{#each graphs}}
+      <a>{{title}}
+        <i class="graphName fas fa-trash-alt clickable" data-id={{_id}}></i>
+      </a>
+      {{/each}}
+    </div>
+    <div class="overlay"></div>
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="#sideBar" data-toggle="collapse">
+      <i class="fas fa-bars menu_icon"></i>
+    </a>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    </div>
+  </nav>
+  <!-- Modal AddGraphics -->
+  <div class="modal fade addGraphique" id="addGraphique" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau graphique</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="overlay"></div>
-        <!-- Navbar brand -->
-        <a class="navbar-brand" href="#sideBar" data-toggle="collapse"><i class="fas fa-bars menu_icon"></i></a>
-    
-        <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        </div>    
-    </nav>
-    <!-- Modal AddGraphics -->
-    <div class="modal fade addGraphique" id="addGraphique" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ajouter un nouveau graphique</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="name">Nom :</label>
+              <input class="form-control" placeholder="Nom du graphique" name="name" id="name"> {{#if missingName}}
+              <span class="form-error">Veuillez saisir un nom.</span>
+              {{/if}}
             </div>
-            <div class="modal-body">
-            <form>
-              <div class="form-group">
-                  <label for="name">Nom :</label>
-                  <input class="form-control" placeholder="nom du graphique" name="name" id="name">
-              </div>
-              <div class="form-group">
-                  <label for="type">Type :</label>
-                  <select class="form-control" id="type">
-                      <option>Jauge</option>
-                      <option>Donuts</option>
-                      <option>KPI</option>
-                      <option>Lineaire</option>
-                      <option>Histogramme</option>
-                  </select>
-              </div>
-              <div class="form-group">
-                  <label for="data">Donnees :</label>
-                  <select class="form-control" id="data">
-                    <option>truc</option>
-                    <option>truc</option>
-                    <option>truc</option>
-                    <option>truc</option>
-                  </select>
-              </div>
-            </form>
+            <div class="form-group">
+              <label for="type">Type :</label>
+              <select class="form-control" id="type">
+                <option value="Jauge">Jauge</option>
+                <option value="KPI">KPI</option>
+                <option value="Histogramme">Histogramme</option>
+                <option value="Donut">Donut</option>
+                <option value="Lineaire">Linéaire</option>
+              </select>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              <button type="button" class="btn btn-primary submitGraph">Creer le graphique</button>
+            <div class="form-group">
+              <label>Données :</label>
+              {{#if canBeParametered}}
+                <div class="btn-group float-right">
+                  <a class="btn addSelect clickable">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                  <a class="btn removeSelect clickable">
+                    <i class="fas fa-minus"></i>
+                  </a>
+                </div>
+                {{#if notEnoughSelects}}
+                <span class="form-error">Impossible d'avoir moins de 2 valeurs.</span>
+                {{/if}} 
+                {{#if tooManySelects}}
+                <span class="form-error">Impossible d'avoir plus de 10 valeurs.</span>
+                {{/if}} 
+              {{/if}} 
+              {{#each selectIds}}
+                <select class="form-control" id="{{id}}">
+                  {{#each selectOptions}}
+                    <option value="{{value}}">{{label}}</option>
+                  {{/each}}
+                </select>
+              {{/each}}
             </div>
-          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary submitGraph">Creer le graphique</button>
         </div>
       </div>
+    </div>
+  </div>
 </template>

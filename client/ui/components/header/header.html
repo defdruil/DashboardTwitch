@@ -1,0 +1,156 @@
+<template name="header">
+    <div class="row">
+        <div class="col-md-12">
+            <br/>
+            <h1>Bienvenue dans l'Apocalypse
+                <br/>
+                <h4>"Et par centaines de miliers, les morts déferlent sur le monde." - Dr. Howard Malthoff</h4>
+            </h1>
+            <br/>
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5>Virus Epidemy</h5>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <h5 class="card-title">Introduction</h5>
+                        <div class=""></div>
+                        <p class="text-left">
+                            Nous sommes en l'an 2050. Les Scientifiques s'affolent suite aux catastrophes causées par le dérèglement climatique. Les
+                            vents dans les déserts dépassent les 300 km/h, le rendant totallement hostile. Les jungles tropicales
+                            sont devenues le berceau de nouvelles bactéries mortelles. Les hivers sont si rudes que la mécanique
+                            des véhicules se brise la nuit tombée. Et l'été, l'eau devient une ressource si rare que certains
+                            doivent se la procurer sur le marché noir.
+                        </p>
+                        <p class="text-left">
+                            Poussée dans ses derniers retranchements, l'humanité a cru voir son salut en son prodigieux intellect, et commença à expérimenter
+                            diverses mutations, dans le but d'accélérer son évolution. Mais les transformations ne furent
+                            pas sans erreurs, et nombre de cabinets de recherche ont fermé boutique à cause de désastres
+                            chimiques.
+                        </p>
+                        <p class="text-left">
+                            Le 14 Juin 2049, le Dr. Howard Malthoff met au point le virus Epidemy. Cette souche est supposé propulser l'homme dans son
+                            avenir lointain, en provocant les mutations nécéssaires à la survie dans les milieux désormais
+                            hostiles de notre la Terre.
+                        </p>
+                        <p class="text-left">
+                            Le 27 novembre 2049, le Dr. Howard Malthoff, soumet son projet au comité d'ethique de du CDC, qui réfute ses travaux en soulignant
+                            la dangerosité de ces derniers.
+                        </p>
+                        <p class="text-left">
+                            Le 31 décembre tard dans la nuit, le Dr. Howard Malthoff, un peu trop ivre de son réveillon, pense à ses travaux. En Darwiniste
+                            accompli, il se dit que ce qu'il avait créé, était la prochaine étape de l'évolution. La loi
+                            du plus fort déciderai de la survie de quelle espèce. Alors le Docteur, déjà hué par ses compaires,
+                            s'injecta le virus Epidemy, et devint le patient zéro.
+                        </p>
+                        <p class="text-left">
+                            Vous travaillez pour le gouvernement mondial, lorsque vous êtes tiré du lit au petit matin. Le présent dossier vous est remis,
+                            avec votre ordre de mission.
+                        </p>
+                        <p class="text-left">
+                            Vous devez analyser l'évolution d'une potentielle contamination de l'espèce humaine par le virus Epidemy. Les contaminés,
+                            sont désignés sous le terme de "Zombie".
+                        </p>
+                        <p class="text-left">
+                            Bonne chance.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <h5 class="card-title">Contrôles</h5>
+                    <p class="text-left">
+                        Vous pouvez utiliser le burger menu en haut à gauche pour gérer les graphiques affichés.
+                    </p>
+                    <p class="text-left">
+                        Le panel "Contrôle de la simulation" ci-dessous, affiche les informations essentielles, et vous permet de gérer la simulation.
+                        <ul class="text-left">
+                            <li>
+                                En appuyant sur le bouton "Lancer", vous pouvez lancer la simulation.
+                            </li>
+                            <li>
+                                En appuyant sur le bouton "Arrêter", vous pouvez arrêter la simulation.
+                            </li>
+                            <li>
+                                En appuyant sur sur le bouton "Redémarrer", vous pouvez remettre à zéro la simulation.
+                            </li>
+                            <li>
+                                Vous pouvez aussi choisir la population initiale de la simulation, en saisissant dans le champ prévu à cet effet la population
+                                désirée, puis en cliquant sur le bouton "Pop. Perso.".
+                                <br/>
+                                <span class="form-error">
+                                    Attention cependant, cette action entraînera une remise à zéro et un arrêt de la simulation.
+                                </span>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5>
+                        Contrôle de la simulation
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                <span class="font-weight-bold">
+                                    Date
+                                </span> : {{day}}
+                                <sup>{{ereme}}</sup> {{monthToFrench}} {{year}}
+                            </p>
+                            <p>
+                                <span class="font-weight-bold">
+                                    Semaine n°
+                                </span>
+                                : {{weekNumber}}
+                            </p>
+
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <span class="font-weight-bold">
+                                    Nombre total de survivants
+                                </span>
+                                : {{totalLivings}}
+                            </p>
+                            <p>
+                                <span class="font-weight-bold">
+                                    Nombre total de Zombies
+                                </span>
+                                 : {{totalZombies}}
+                            </p>
+
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row justify-content-between">
+                        <div class=" col-md-4 btn-group">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-success start">Lancer</button>
+                                <button type="button" class="btn btn-secondary stop">Arrêter</button>
+                                <button type="button" class="btn btn-danger reset">Redémarrer</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <input placeholder="Population" type="text" class="form-control" id="population" value="{{totalPopulation}}">
+                                </div>
+                                <span class="form-group bmd-form-group">
+                                    <button type="button" class="btn btn-primary resetForPopulation">Pop. Perso.</button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

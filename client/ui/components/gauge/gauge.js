@@ -1,13 +1,33 @@
 import './gauge.html'
 import { Template } from 'meteor/templating';
 
+var self;
+
+function getValues(){
+    Meteor.call("getServerVariableValue", self.data[0], function(error, result){
+        if(!error){
+            self.value.set(result.value);
+            self.graphGauge.dxCircularGauge({ value: self.value.get() });
+        }
+    });
+}
+
 Template.gauge.onCreated(function() {
-    Template.instance().value = new ReactiveVar(1000000000);
+    //Template.instance().value = new ReactiveVar(1000000000);
+    self = this;
+    if (this.interval){
+        clearInterval(this.interval);
+    }
+    this.value = new ReactiveVar(0);
+    if(this.data.length == 1){
+        setInterval(getValues, 100);
+    }
+    
 });
 
 Template.gauge.onRendered(function () {
-    console.log("Rendu d'un graphe de type", this.data.type);
-    console.log("Attribut data:", Template.instance().data);
+    //console.log("Rendu d'un graphe de type", this.data.type);
+    //console.log("Attribut data:", Template.instance().data);
 	/*Meteor.call("getCurrentValues", function(error, result){
 		if(!error){
 			console.log(result);
@@ -18,8 +38,8 @@ Template.gauge.onRendered(function () {
 	//console.log(Meteor.call("start"));
 	//console.log(Meteor.call("stop"));
 	//console.log(Meteor.call("reset"));
-	console.log(Template.instance());
-	console.log(this);
+	//console.log(Template.instance());
+	//console.log(this);
 	
     // init jauge
     const DOMGraph = Template.instance().find(".circularGaugeContainer");
@@ -32,8 +52,8 @@ Template.gauge.onRendered(function () {
             ]
         },
         scale: {
-            startValue: Template.instance().data.settings.startValue, endValue: Template.instance().data.settings.endValue,
-            majorTick: { tickInterval: Template.instance().data.settings.tickInterval },
+            startValue: Template.instance().settings.startValue, endValue: Template.instance().settings.endValue,
+            majorTick: { tickInterval: Template.instance().settings.tickInterval },
             label: {
                 format: 'number'
             }

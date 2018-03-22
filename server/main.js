@@ -7,7 +7,7 @@ Meteor.methods({
     deleteGraphics: function(removeId){
       return GraphicsList.remove(removeId);
     },
-    addGraphics: function(name, type, data){
+    addGraphics: function(name, type, datas){
       if(type == 'Jauge'){
         type = 'gauge';
         var settings = {
@@ -90,6 +90,6 @@ Meteor.methods({
           ]
         }
       }
-      return GraphicsList.insert({type: type, data: data, settings: settings, title: name});
+      return GraphicsList.insert({type: type, data: datas, settings: settings, title: name});
     }
   });

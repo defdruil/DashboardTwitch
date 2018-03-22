@@ -3,6 +3,8 @@ const baseURL = "http://localhost:8080/"
 
 var interval;
 
+var totalPopulation;
+
 // #region All 25 game variables from API
 var totalZombies;
 var totalLiving;
@@ -123,6 +125,8 @@ function getCurrentValues(){
 				day = body.day;
 				month = body.month;
 				year = body.year;
+
+				totalPopulation = totalZombies + totalLiving;
 				
 				// History Request
 				http.get(baseURL + "getHistory", res => {
@@ -400,10 +404,11 @@ function getVariableLabel(variableName){
 				toReturn = "Historique des Années";
 				break;
 		}
-		return toReturn;
+		console.log(toReturn);
+		return {value: variableName, label : toReturn};
 }
 
-function getVariableValue(){
+function getVariableValue(variableName){
 	toReturn = 0;
 	switch (variableName) {
 		case "totalZombies":
@@ -556,8 +561,11 @@ function getVariableValue(){
 		case "yearHistory":
 			toReturn = yearHistory;
 			break;
+		case "totalPopulation":
+			toReturn = totalPopulation;
+			break;
 	}
-	return toReturn;
+	return {name: variableName, value: toReturn};
 }
 
 Meteor.methods({
@@ -585,11 +593,18 @@ Meteor.methods({
 		}
 		return "reset called";
 	},
-	getServerVariable: function(variableName){
+	getServerVariableValue: function(variableName){
 		return getVariableValue(variableName);
 	},
 	 getServerVariableLabel: function(variableName){
 		 return getVariableLabel(variableName);
-	 }
-	
+	 },
+	resetForPopulation: function(populationNumber){
+		try {
+			http.get(baseURL + "resetForPopulation/" + populationNumber, res => {});
+		} catch (err) {
+			console.log(err);
+		}
+		return "Reset for Population Called : " + populationNumber;
+	}
 });

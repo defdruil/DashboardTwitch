@@ -1,33 +1,23 @@
 import './gauge.html'
 import { Template } from 'meteor/templating';
 
-var self;
-
-function getValues(){
-    Meteor.call("getServerVariableValue", self.data.data[0], function(error, result){
-        if(!error){
-           setNewValue(result.value);
-            //self.value.set(result.value);
-            //self.graphGauge.dxCircularGauge({ value: self.value.get() });
-        }
-    });
-}
-
-function setNewValue(newValue){
-    self.value.set(newValue);
-    self.graphGauge.dxCircularGauge({ value: newValue });
-}
-
 Template.gauge.onCreated(function() {
-    //Template.instance().value = new ReactiveVar(1000000000);
-    self = this;
-    this.id = this.data.settings.id;
-    if (this.interval){
-        clearInterval(this.interval);
+    let instance = Template.instance();
+
+    Template.instance().getValues = function() {
+        Meteor.call("getServerVariableValue", instance.data.data[0], function(error, result){
+            if(!error){
+                console.log('Récup des valeurs', result);
+                instance.setNewValue(result.value);
+            }
+        });
     }
-    this.value = new ReactiveVar(0);
-    if(this.data.data.length == 1){
-        setInterval(getValues, 100);
+    
+    Template.instance().setNewValue = function(newValue){
+        console.log(instance);
+
+        instance.value.set(newValue);
+        instance.graphGauge.dxCircularGauge({ value: newValue });
     }
     
 });
@@ -48,8 +38,16 @@ Template.gauge.onRendered(function () {
 	//console.log(Template.instance());
 	//console.log(this);
 	
-    // init jauge
-    const DOMGraph = Template.instance().find("#circularGaugeContainer_" + this.id);
+    // init jauge    this.id = this.data.settings.id;    
+    if (Template.instance().interval){
+        clearInterval(Template.instance().interval);
+    }
+    Template.instance().value = new ReactiveVar(0);
+    if(Template.instance().data.data.length == 1){
+        setInterval(Template.instance().getValues, 100);
+    }
+    
+    const DOMGraph = Template.instance().find(".circularGaugeContainer");
     Template.instance().graphGauge = $(DOMGraph).dxCircularGauge({
         rangeContainer: {
             offset: 10,
@@ -98,14 +96,8 @@ Template.gauge.events({
             Template.instance().value = new ReactiveVar(1000000000);
         }
         var newValue = Template.instance().value.get() + 1000000000;
-        setNewValue(newValue);
+        Template.instance().setNewValue(newValue);
         //Template.instance().value.set(Template.instance().value.get() + 1000000000);
         //Template.instance().graphGauge.dxCircularGauge({ value: Template.instance().value.get() });
     }
 })
-
-Template.gauge.helpers({
-    id: function(){
-        return Template.instance().id;
-    }
-});

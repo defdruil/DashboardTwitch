@@ -1,7 +1,7 @@
 import './gauge.html'
 import { Template } from 'meteor/templating';
 
-var self= [];
+var self;
 
 function getValues(){
     Meteor.call("getServerVariableValue", self.data.data[0], function(error, result){
@@ -20,7 +20,7 @@ function setNewValue(newValue){
 
 Template.gauge.onCreated(function() {
     //Template.instance().value = new ReactiveVar(1000000000);
-    self.push(this);
+    self = this;
     this.id = this.data.settings.id;
     if (this.interval){
         clearInterval(this.interval);

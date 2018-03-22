@@ -1,6 +1,4 @@
-import './header.html';
-import '../../pages/home/home.html';
-import $ from 'jquery';
+import './header.html'
 import { Template } from 'meteor/templating';
 
 var self;

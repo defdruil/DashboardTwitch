@@ -20,19 +20,19 @@ function setNewValue(newValue){
 
 Template.gauge.onCreated(function() {
     //Template.instance().value = new ReactiveVar(1000000000);
-    self = this;
     this.id = this.data.settings.id;
-    if (this.interval){
-        clearInterval(this.interval);
-    }
     this.value = new ReactiveVar(0);
-    if(this.data.data.length == 1){
-        setInterval(getValues, 100);
-    }
     
 });
 
 Template.gauge.onRendered(function () {
+    self = this;
+    if (this.interval){
+        Meteor.clearInterval(this.interval);
+    }
+    if(this.data.data.length == 1){
+    this.interval = Meteor.setInterval(getValues, 100);
+    }
     //console.log("Rendu d'un graphe de type", this.data.type);
     //console.log("Attribut data:", Template.instance().data);
 	/*Meteor.call("getCurrentValues", function(error, result){
@@ -107,5 +107,8 @@ Template.gauge.events({
 Template.gauge.helpers({
     id: function(){
         return Template.instance().id;
+    },
+    value: function(){
+        return Template.instance().value.get();
     }
 });

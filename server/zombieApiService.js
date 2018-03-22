@@ -404,7 +404,6 @@ function getVariableLabel(variableName){
 				toReturn = "Historique des Années";
 				break;
 		}
-		console.log(toReturn);
 		return {value: variableName, label : toReturn};
 }
 

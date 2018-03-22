@@ -1,6 +1,6 @@
 <template name="home">
-    {{> header}}
-    <br/>
+        {{> header}}
+        <br/>
     <div class="row">
         {{#each allGraphs}} {{> Template.dynamic template='graph' data=this}} {{/each}}
         <!--{{#each tasks}}

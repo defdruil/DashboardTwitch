@@ -15,8 +15,8 @@ Meteor.methods({
         var settings = {
           id,
           startValue: 0,
-          endValue: 1000000000,
-          tickInterval: 50000000
+          endValue: 7000000000,
+          tickInterval: 1000000000
         }
       }else if(type === 'KPI'){
         var settings = {

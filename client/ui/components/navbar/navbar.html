@@ -1,7 +1,7 @@
 <template name="navbar">
   <!--Navbar-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="d-flex col-md-2 flex-column h-100 bg-primary fixed-top" id="sideBar">
+    <div class="d-flex col-md-2 flex-column h-100 bg-dark fixed-top text-white" id="sideBar">
       <br/>
       <div class="form-inline">
         <button type="button" class="btn btn-raised btn-warning .d-flex" data-toggle="modal" data-target="#addGraphique">Créer un Graph</button>
@@ -9,9 +9,14 @@
       <br/>
       <h5>Mes Graphs</h5>
       {{#each graphs}}
-      <a>{{title}}
-        <i class="graphName fas fa-trash-alt clickable" data-id={{_id}}></i>
-      </a>
+      <div class="row">
+        <div class="col-6">
+          <a>{{title}}</a>
+        </div>
+        <div class="col-6">
+          <i class="graphName fas fa-trash-alt clickable" data-id={{_id}}></i>
+        </div>
+      </div>
       {{/each}}
     </div>
     <div class="overlay"></div>

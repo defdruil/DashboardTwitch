@@ -137,7 +137,8 @@ function getCurrentValues(){
 					});
 					res.on("end", () => {
 						body = JSON.parse(body);
-						// Get all needed informations and memorize them
+						// Get all needed informations and memorize them*
+						totalZombiesHistoryTemp = Array();
 						totalLivingHistoryTemp = Array();
 						weekNumberHistoryTemp = Array();
 						numberOfLivingsKilledHistoryTemp = Array();
@@ -164,32 +165,33 @@ function getCurrentValues(){
 						yearHistoryTemp = Array();
 						
 						for (var i = 0 ; i < body.length ; i++) {
-							totalZombiesHistoryTemp = body[i].totalZombies;
-							totalLivingHistoryTemp = body[i].totalLiving;
-							weekNumberHistoryTemp = body[i].weekNumber;
-							numberOfLivingsKilledHistoryTemp = body[i].numberOfLivingsKilled;
-							numberOfZombiesKilledHistoryTemp = body[i].numberOfZombiesKilled;
-							DiedWithoutBeingZombifiedHistoryTemp = body[i].DiedWithoutBeingZombified;
-							livingsDeadByZombieBiteHistoryTemp = body[i].deathReasons.livingsDeadByZombieBite;
-							livingsDeadByGunHistoryTemp = body[i].deathReasons.livingsDeadByGun;
-							livingsDeadByAccidentHistoryTemp = body[i].deathReasons.livingsDeadByAccident;
-							livingsDeadByFireHistoryTemp = body[i].deathReasons.livingsDeadByFire;
-							livingsDeadByHungerHistoryTemp = body[i].deathReasons.livingsDeadByHunger;
-							livingsDeadByDeseaseHistoryTemp = body[i].deathReasons.livingsDeadByDesease;
-							livingsDeadByDehydratationHistoryTemp = body[i].deathReasons.livingsDeadByDehydratation;
-							livingsDeadByBladedWeaponHistoryTemp = body[i].deathReasons.livingsDeadByBladedWeapon;
-							livingsDeadByTrapHistoryTemp = body[i].deathReasons.livingsDeadByTrap;
-							livingsDeadFromOtherReasonHistoryTemp = body[i].deathReasons.livingsDeadFromOtherReason;
-							zombiesDeadByGunHistoryTemp = body[i].deathReasons.zombiesDeadByGun;
-							zombiesDeadByAccidentHistoryTemp = body[i].deathReasons.zombiesDeadByAccident;
-							zombiesDeadByFireHistoryTemp = body[i].deathReasons.zombiesDeadByFire;
-							zombiesDeadByHungerHistoryTemp = body[i].deathReasons.zombiesDeadByHunger;
-							zombiesDeadByBladedWeaponHistoryTemp = body[i].deathReasons.zombiesDeadByBladedWeapon;
-							zombiesDeadByTrapHistoryTemp = body[i].deathReasons.zombiesDeadByTrap;
-							dayHistoryTemp = body[i].day;
-							monthHistoryTemp = body[i].month;
-							yearHistoryTemp = body[i].year;
+							totalZombiesHistoryTemp.push(body[i].totalZombies);
+							totalLivingHistoryTemp.push(body[i].totalLiving);
+							weekNumberHistoryTemp.push(body[i].weekNumber);
+							numberOfLivingsKilledHistoryTemp.push(body[i].numberOfLivingsKilled);
+							numberOfZombiesKilledHistoryTemp.push(body[i].numberOfZombiesKilled);
+							DiedWithoutBeingZombifiedHistoryTemp.push(body[i].DiedWithoutBeingZombified);
+							livingsDeadByZombieBiteHistoryTemp.push(body[i].deathReasons.livingsDeadByZombieBite);
+							livingsDeadByGunHistoryTemp.push(body[i].deathReasons.livingsDeadByGun);
+							livingsDeadByAccidentHistoryTemp.push(body[i].deathReasons.livingsDeadByAccident);
+							livingsDeadByFireHistoryTemp.push(body[i].deathReasons.livingsDeadByFire);
+							livingsDeadByHungerHistoryTemp.push(body[i].deathReasons.livingsDeadByHunger);
+							livingsDeadByDeseaseHistoryTemp.push(body[i].deathReasons.livingsDeadByDesease);
+							livingsDeadByDehydratationHistoryTemp.push(body[i].deathReasons.livingsDeadByDehydratation);
+							livingsDeadByBladedWeaponHistoryTemp.push(body[i].deathReasons.livingsDeadByBladedWeapon);
+							livingsDeadByTrapHistoryTemp.push(body[i].deathReasons.livingsDeadByTrap);
+							livingsDeadFromOtherReasonHistoryTemp.push(body[i].deathReasons.livingsDeadFromOtherReason);
+							zombiesDeadByGunHistoryTemp.push(body[i].deathReasons.zombiesDeadByGun);
+							zombiesDeadByAccidentHistoryTemp.push(body[i].deathReasons.zombiesDeadByAccident);
+							zombiesDeadByFireHistoryTemp.push(body[i].deathReasons.zombiesDeadByFire);
+							zombiesDeadByHungerHistoryTemp.push(body[i].deathReasons.zombiesDeadByHunger);
+							zombiesDeadByBladedWeaponHistoryTemp.push(body[i].deathReasons.zombiesDeadByBladedWeapon);
+							zombiesDeadByTrapHistoryTemp.push(body[i].deathReasons.zombiesDeadByTrap);
+							dayHistoryTemp.push(body[i].day);
+							monthHistoryTemp.push(body[i].month);
+							yearHistoryTemp.push(body[i].year);
 						}
+						totalZombiesHistory = totalZombiesHistoryTemp;
 						totalLivingHistory = totalLivingHistoryTemp;
 						weekNumberHistory = weekNumberHistoryTemp;
 						numberOfLivingsKilledHistory = numberOfLivingsKilledHistoryTemp;
@@ -225,6 +227,7 @@ function getCurrentValues(){
 
 function resetHistoryVariables(){
 	totalLivingHistory = Array();
+	totalZombiesHistory = Array();
 	weekNumberHistory = Array();
 	numberOfLivingsKilledHistory = Array();
 	numberOfZombiesKilledHistory = Array();
@@ -563,6 +566,9 @@ function getVariableValue(variableName){
 		case "totalPopulation":
 			toReturn = totalPopulation;
 			break;
+	}
+	if (variableName == "totalLivingHistory"){
+		console.log(toReturn);
 	}
 	return {name: variableName, value: toReturn};
 }

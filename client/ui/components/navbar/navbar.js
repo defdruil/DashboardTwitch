@@ -167,7 +167,7 @@ Template.navbar.events({
 		} else {
             addNewSelect();
             addNewSelect();
-            if (graphType == "Histogramme"){
+            if (graphType == "Histogramme" || graphType == "Donuts"){
                 tmpl.selectOptions.set(tmpl.directValuesSelectOptions);
             } else {
                 tmpl.selectOptions.set(tmpl.historyValuesSelectOptions);

@@ -1,59 +1,58 @@
 import { Template } from 'meteor/templating';
 
-var self;
+Template.kpi.onCreated(function () {
+    let instance = Template.instance();
 
-function getValues(){
-    Meteor.call("getServerVariableValue", self.data.data[0], function(error, result){
-        if (!error){
-            self.oldValue.set(self.value.get());
-            self.value.set(result.value);
-            if (self.oldValue.get() > self.value.get()){
-                self.upOrDown.set("arrow-circle-down");
-            } else if (self.oldValue.get() == self.value.get()){
-                self.upOrDown.set("window-minimize");
-            } else {
-                self.upOrDown.set("arrow-circle-up");
+    Template.instance().getValues = function () {
+        Meteor.call("getServerVariableValue", instance.data.data[0], function (error, result) {
+            if (!error) {
+                instance.oldValue.set(instance.value.get());
+                instance.value.set(result.value);
+                if (instance.oldValue.get() > instance.value.get()) {
+                    instance.upOrDown.set("arrow-circle-down");
+                } else if (instance.oldValue.get() == instance.value.get()) {
+                    instance.upOrDown.set("window-minimize");
+                } else {
+                    instance.upOrDown.set("arrow-circle-up");
+                }
             }
-        }
-    });
-}
+        });
+    }
 
-Template.kpi.onCreated(function(){
-    self = this;
-    if (this.interval){
+    if (this.interval) {
         Meteor.clearInterval(this.interval);
     }
     this.value = ReactiveVar(0);
-   this.oldValue = ReactiveVar(0); 
-   this.upOrDown = ReactiveVar("window-minimize");
-   this.interval = Meteor.setInterval(getValues, 100);
+    this.oldValue = ReactiveVar(0);
+    this.upOrDown = ReactiveVar("window-minimize");
+    this.interval = Meteor.setInterval(this.getValues, 100);
 });
 
-Template.kpi.onRendered(function(){
-    console.log("rendu d'un graphe de type " + this.data.type);    
+Template.kpi.onRendered(function () {
+    console.log("rendu d'un graphe de type " + this.data.type);
     //Template.instance().$(".kpiChart").html(Template.instance().data.settings.value);
 });
 
 Template.kpi.events({
-    'click button': function() {
+    'click button': function () {
         //Template.instance().$(".kpiChart").html((Template.instance().data.settings.value += 10));        
     }
 });
 
 Template.kpi.helpers({
-    value: function(){
+    value: function () {
         return Template.instance().value.get();
     },
-    wentUp: function(){
+    wentUp: function () {
         return Template.instance().value.get() > Template.instance().oldValue.get();
     },
-    stayedStill: function(){
+    stayedStill: function () {
         return Template.instance().value.get() == Template.instance().oldValue.get();
     },
-    wentDown: function(){
+    wentDown: function () {
         return Template.instance().value.get() < Template.instance().oldValue.get();
     },
-    upOrDown: function(){
+    upOrDown: function () {
         return Template.instance().upOrDown.get();
     }
 })

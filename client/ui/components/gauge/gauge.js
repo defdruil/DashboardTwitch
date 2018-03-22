@@ -7,15 +7,12 @@ Template.gauge.onCreated(function() {
     Template.instance().getValues = function() {
         Meteor.call("getServerVariableValue", instance.data.data[0], function(error, result){
             if(!error){
-                console.log('Récup des valeurs', result);
                 instance.setNewValue(result.value);
             }
         });
     }
     
     Template.instance().setNewValue = function(newValue){
-        console.log(instance);
-
         instance.value.set(newValue);
         instance.graphGauge.dxCircularGauge({ value: newValue });
     }
@@ -28,7 +25,7 @@ Template.gauge.onRendered(function () {
         Meteor.clearInterval(this.interval);
     }
     if(this.data.data.length == 1){
-    this.interval = Meteor.setInterval(getValues, 100);
+    this.interval = Meteor.setInterval(this.getValues, 100);
     }
     //console.log("Rendu d'un graphe de type", this.data.type);
     //console.log("Attribut data:", Template.instance().data);

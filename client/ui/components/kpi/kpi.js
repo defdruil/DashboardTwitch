@@ -1,31 +1,42 @@
+import './kpi.html';
 import { Template } from 'meteor/templating';
 
 Template.kpi.onCreated(function () {
     let instance = Template.instance();
-
+    this.value = new ReactiveVar(0);
+    this.oldValue = new ReactiveVar(0);
+    this.upOrDown = new ReactiveVar("window-minimize");
+    this.label = new ReactiveVar("");
+    console.log(instance);
     Template.instance().getValues = function () {
         Meteor.call("getServerVariableValue", instance.data.data[0], function (error, result) {
             if (!error) {
                 instance.oldValue.set(instance.value.get());
                 instance.value.set(result.value);
                 if (instance.oldValue.get() > instance.value.get()) {
-                    instance.upOrDown.set("arrow-circle-down");
+                    instance.upOrDown.set("fa-arrow-circle-down red");
                 } else if (instance.oldValue.get() == instance.value.get()) {
-                    instance.upOrDown.set("window-minimize");
+                    instance.upOrDown.set("fa-window-minimize grey");
                 } else {
-                    instance.upOrDown.set("arrow-circle-up");
+                    instance.upOrDown.set("fa-arrow-circle-up green");
                 }
+                instance.kpiIcon = instance.$(".kpiIcon");
+                instance.kpiIcon.removeClass("red green grey fa-arrow-circle-down fa-window-minimize fa-arrow-circle-up").addClass(instance.upOrDown.get());
             }
         });
     }
+    Meteor.call("getServerVariableLabel", instance.data.data[0], function (error, result) {
+        if (!error) {
+            instance.label.set(result.label);
+        } else {
+            console.log(error);
+        }
+    });
 
     if (this.interval) {
         Meteor.clearInterval(this.interval);
     }
-    this.value = ReactiveVar(0);
-    this.oldValue = ReactiveVar(0);
-    this.upOrDown = ReactiveVar("window-minimize");
-    this.interval = Meteor.setInterval(this.getValues, 100);
+    this.interval = Meteor.setInterval(this.getValues, 500);
 });
 
 Template.kpi.onRendered(function () {
@@ -54,5 +65,8 @@ Template.kpi.helpers({
     },
     upOrDown: function () {
         return Template.instance().upOrDown.get();
+    },
+    label: function () {
+        return Template.instance().label.get();
     }
-})
+});

@@ -1,7 +1,6 @@
 @import "~bootstrap-material-design/scss/bootstrap-material-design";
 .graphCard{
-    min-height: 400px; 
-    min-width: 400px;
+    max-height: 400px;
 }
 
 #sideBar{
@@ -50,4 +49,20 @@
 .form-error{
     color: red;
     font-size: 90%;
+}
+
+.kpi{
+    font-size: 500%;
+}
+
+.red{
+    color:red;
+}
+
+.green{
+    color: green;
+}
+
+.grey{
+    color:grey;
 }

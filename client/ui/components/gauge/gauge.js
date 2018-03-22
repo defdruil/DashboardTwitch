@@ -1,56 +1,49 @@
 import './gauge.html'
 import { Template } from 'meteor/templating';
 
-Template.gauge.onCreated(function() {
+Template.gauge.onCreated(function () {
     let instance = Template.instance();
+    this.label = new ReactiveVar("");
 
-    Template.instance().getValues = function() {
-        Meteor.call("getServerVariableValue", instance.data.data[0], function(error, result){
-            if(!error){
+    Meteor.call("getServerVariableLabel", instance.data.data[0], function(error, result){
+        if (!error){
+            instance.label.set(result.label);
+        } else{
+            console.log(error);
+        }
+    });
+
+    Template.instance().getValues = function () {
+        Meteor.call("getServerVariableValue", instance.data.data[0], function (error, result) {
+            if (!error) {
                 instance.setNewValue(result.value);
             }
         });
     }
-    
-    Template.instance().setNewValue = function(newValue){
+
+    Template.instance().setNewValue = function (newValue) {
         instance.value.set(newValue);
         instance.graphGauge.dxCircularGauge({ value: newValue });
     }
-    
+
 });
 
 Template.gauge.onRendered(function () {
-    self = this;
-    if (this.interval){
+    if (this.interval) {
         Meteor.clearInterval(this.interval);
     }
-    if(this.data.data.length == 1){
-    this.interval = Meteor.setInterval(this.getValues, 100);
+    if (this.data.data.length == 1) {
+        this.interval = Meteor.setInterval(this.getValues, 500);
     }
-    //console.log("Rendu d'un graphe de type", this.data.type);
-    //console.log("Attribut data:", Template.instance().data);
-	/*Meteor.call("getCurrentValues", function(error, result){
-		if(!error){
-			console.log(result);
-		} else {
-			console.log(error);
-		}
-	});*/
-	//console.log(Meteor.call("start"));
-	//console.log(Meteor.call("stop"));
-	//console.log(Meteor.call("reset"));
-	//console.log(Template.instance());
-	//console.log(this);
-	
-    // init jauge    this.id = this.data.settings.id;    
-    if (Template.instance().interval){
+
+    if (Template.instance().interval) {
         clearInterval(Template.instance().interval);
     }
     Template.instance().value = new ReactiveVar(0);
-    if(Template.instance().data.data.length == 1){
+    if (Template.instance().data.data.length == 1) {
         setInterval(Template.instance().getValues, 100);
     }
-    
+
     const DOMGraph = Template.instance().find(".circularGaugeContainer");
     Template.instance().graphGauge = $(DOMGraph).dxCircularGauge({
         rangeContainer: {
@@ -103,5 +96,11 @@ Template.gauge.events({
         Template.instance().setNewValue(newValue);
         //Template.instance().value.set(Template.instance().value.get() + 1000000000);
         //Template.instance().graphGauge.dxCircularGauge({ value: Template.instance().value.get() });
+    }
+});
+
+Template.gauge.helpers({
+    label: function(){
+        return Template.instance().label.get();
     }
 })

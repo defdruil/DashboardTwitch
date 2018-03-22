@@ -223,5 +223,5 @@ Template.chart.onRendered(function () {
     }
     console.log("rendu d'un graphe de type " + this.data.type);
 
-    this.interval = Meteor.setInterval(this.getValues, 100);
+    this.interval = Meteor.setInterval(this.getValues, 500);
 });

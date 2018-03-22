@@ -11173,8 +11173,7 @@ h6 {
     min-width: 280px; } }
 
 .graphCard {
-  min-height: 400px;
-  min-width: 400px; }
+  max-height: 400px; }
 
 #sideBar {
   z-index: 1000;
@@ -11214,3 +11213,15 @@ h6 {
 .form-error {
   color: red;
   font-size: 90%; }
+
+.kpi {
+  font-size: 500%; }
+
+.red {
+  color: red; }
+
+.green {
+  color: green; }
+
+.grey {
+  color: grey; }

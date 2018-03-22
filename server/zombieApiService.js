@@ -567,9 +567,6 @@ function getVariableValue(variableName){
 			toReturn = totalPopulation;
 			break;
 	}
-	if (variableName == "totalLivingHistory"){
-		console.log(toReturn);
-	}
 	return {name: variableName, value: toReturn};
 }
 

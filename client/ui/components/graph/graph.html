@@ -1,17 +1,21 @@
 <template name="graph">
-        <div class="card graphCard col-md-6">
-                <div class="card-body">
-                        <h5 class="card-title">{{title}}</h5>
-                        {{#if isGauge}}
+        <div class="graphCard col-md-6">
+                <div class="card">
+                        <div class="card-header">
+                                <h5 class="card-title text-center">{{title}}</h5>
+                        </div>
+                        <div class="card-body">
+                                {{#if isGauge}}
                                 {{>Template.dynamic template='gauge'}} 
-                        {{else}} 
-                                {{#if isChart}} 
-                                        {{>Template.dynamic template='chart'}}
                                 {{else}} 
-                                        {{>Template.dynamic template='kpi'}} 
+                                {{#if isChart}} 
+                                {{>Template.dynamic template='chart'}}
+                                {{else}} 
+                                {{>Template.dynamic template='kpi'}} 
                                 {{/if}} 
-                        {{/if}}
+                                {{/if}}
+                        </div>
+                        <div class="btn btn-primary button"></div>
                 </div>
-                <div class="btn btn-primary button"></div>
         </div>
 </template>

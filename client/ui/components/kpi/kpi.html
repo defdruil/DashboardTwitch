@@ -1,7 +1,12 @@
 <template name="kpi">
     <div class="kpiChart">
-        <h1>{{value}}</h1>
-        <i class="fas fa-{{upOrDown}}"></i>
+        <div class="row text-center">
+
+            <h1 class="kpi col-md-10">{{value}}</h1>
+            <i class="col-md-2 kpiIcon fas fa-5x fa-arrow-circle-up float-right"></i>
+        </div>
     </div>
-    <button class="btn btn-primary">Add</button>
+    <h5 class="text-center">
+        {{label}}
+    </h5>
 </template>

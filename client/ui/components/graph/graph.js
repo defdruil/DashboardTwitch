@@ -3,7 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 Template.graph.onCreated(function () {
-    console.log(Template.instance().data);
 
     /*var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
